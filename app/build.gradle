@@ -1,0 +1,67 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+//apply plugin: 'de.mannodermaus.android-junit5'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "org.com.castcodechallenge.comcastcodechallenge"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:design:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:${deps.retrofitVersionLib}"
+    implementation "com.squareup.retrofit2:converter-gson:${deps.gsonVersionLib}"
+
+    //Google Maps
+    implementation "com.google.android.gms:play-services-maps:${deps.googleMapsVersionLib}"
+
+    // Room components
+    implementation "android.arch.persistence.room:runtime:${deps.roomVersion}"
+    kapt "android.arch.persistence.room:compiler:${deps.roomVersion}"
+
+    //Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${deps.coroutinesVersionLib}"
+
+    testImplementation "org.robolectric:robolectric:4.0"
+    testImplementation "com.nhaarman:mockito-kotlin:1.5.0"
+    testImplementation 'org.amshove.kluent:kluent:1.14'
+
+    //Picasso
+    implementation "com.squareup.picasso:picasso:${deps.picassoVersionLib}"
+
+    //Mockito
+    testImplementation "org.mockito:mockito-core:${deps.mockitoCoreVersionLib}"
+    testImplementation "com.nhaarman:mockito-kotlin:${deps.nhaarmanMockitoVersionLib}"
+
+}
+
+//Dagger
+dependencies {
+    implementation "com.google.dagger:dagger:${deps.daggerVersionLib}"
+    kapt "com.google.dagger:dagger-compiler:${deps.daggerVersionLib}"
+}
