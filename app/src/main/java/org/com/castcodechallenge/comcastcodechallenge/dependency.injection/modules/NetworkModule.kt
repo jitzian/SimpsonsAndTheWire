@@ -6,10 +6,8 @@ import dagger.Reusable
 import org.com.castcodechallenge.comcastcodechallenge.constants.GlobalConstants.Companion.baseUrl
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import javax.inject.Singleton
 
 @Module
-@Singleton
 class NetworkModule {
 
     @Provides
