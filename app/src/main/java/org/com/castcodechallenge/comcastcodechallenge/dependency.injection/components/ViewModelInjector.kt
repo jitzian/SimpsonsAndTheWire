@@ -1,7 +1,7 @@
 package org.com.castcodechallenge.comcastcodechallenge.dependency.injection.components
 
 import dagger.Component
-import org.com.castcodechallenge.comcastcodechallenge.MainActivity
+import org.com.castcodechallenge.comcastcodechallenge.ui.MainActivity
 import org.com.castcodechallenge.comcastcodechallenge.dependency.injection.modules.NetworkModule
 import javax.inject.Singleton
 

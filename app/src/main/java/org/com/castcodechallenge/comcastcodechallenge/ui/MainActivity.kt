@@ -1,4 +1,4 @@
-package org.com.castcodechallenge.comcastcodechallenge
+package org.com.castcodechallenge.comcastcodechallenge.ui
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.com.castcodechallenge.comcastcodechallenge.R
 import org.com.castcodechallenge.comcastcodechallenge.api.RestApi
 import org.com.castcodechallenge.comcastcodechallenge.api.model.CharactersResult
 import org.com.castcodechallenge.comcastcodechallenge.constants.GlobalConstants.Companion.format
