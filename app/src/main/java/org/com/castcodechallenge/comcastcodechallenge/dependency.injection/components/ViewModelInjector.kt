@@ -3,14 +3,15 @@ package org.com.castcodechallenge.comcastcodechallenge.dependency.injection.comp
 import dagger.Component
 import org.com.castcodechallenge.comcastcodechallenge.ui.MainActivity
 import org.com.castcodechallenge.comcastcodechallenge.dependency.injection.modules.NetworkModule
+import org.com.castcodechallenge.comcastcodechallenge.ui.CharactersViewModel
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [NetworkModule::class])
 interface ViewModelInjector {
 
-//    fun inject()
     fun inject(mainActivity: MainActivity)
+    fun inject(charactersViewModel: CharactersViewModel)
 
     @Component.Builder
     interface Builder {
