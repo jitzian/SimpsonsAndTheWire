@@ -1,16 +1,30 @@
 package org.com.castcodechallenge.comcastcodechallenge.ui
 
-import org.com.castcodechallenge.comcastcodechallenge.api.RestApi
-import javax.inject.Inject
+import android.arch.lifecycle.MutableLiveData
+import org.com.castcodechallenge.comcastcodechallenge.db.model.Character
 
 class CharactersViewModel: BaseViewModel(){
-    @Inject
-    lateinit var restApi: RestApi
 
-    init{
+    private val resultText = MutableLiveData<String>()
+    private val text = MutableLiveData<String>()
+    private val imageUrl = MutableLiveData<String>()
 
+    fun bind(character: Character){
+        resultText.value = character.result
+        text.value = character.text
+        imageUrl.value = character.text
     }
 
+    fun getResultText(): MutableLiveData<String>{
+        return resultText
+    }
 
+    fun getText(): MutableLiveData<String>{
+        return text
+    }
+
+    fun getImageUrl(): MutableLiveData<String>{
+        return imageUrl
+    }
 
 }
