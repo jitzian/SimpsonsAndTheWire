@@ -5,7 +5,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "characters")
-data class Characters(
+data class Character(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "url") var url: String? = null,
     @ColumnInfo(name = "text") var text: String? = null,
