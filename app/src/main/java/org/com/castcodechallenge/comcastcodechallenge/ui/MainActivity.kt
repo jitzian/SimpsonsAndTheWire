@@ -1,12 +1,12 @@
 package org.com.castcodechallenge.comcastcodechallenge.ui
 
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
 
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -14,6 +14,7 @@ import org.com.castcodechallenge.comcastcodechallenge.R
 import org.com.castcodechallenge.comcastcodechallenge.api.RestApi
 import org.com.castcodechallenge.comcastcodechallenge.api.model.CharactersResult
 import org.com.castcodechallenge.comcastcodechallenge.constants.GlobalConstants.Companion.format
+import org.com.castcodechallenge.comcastcodechallenge.databinding.ActivityMainBinding
 import org.com.castcodechallenge.comcastcodechallenge.dependency.injection.components.DaggerViewModelInjector
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,6 +28,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var restApi: RestApi
     private lateinit var log: Logger
 
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var viewModel: CharactersListViewModel
+    private var errorSnackbar: Snackbar? = null
+
 
     @Inject
     lateinit var retrofit: Retrofit
@@ -34,17 +39,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+        initBinding()
+    }
 
-        log = Logger.getLogger(TAG)
-
-        setupInjection()
-        fetchDataFromApi()
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+    private fun initBinding(){
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.charactersList
     }
 
     private fun setupInjection(){
