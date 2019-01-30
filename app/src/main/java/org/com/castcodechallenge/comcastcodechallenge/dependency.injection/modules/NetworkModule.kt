@@ -13,7 +13,7 @@ class NetworkModule {
 
     @Provides
     @Reusable
-    fun proveidesApi(retrofit: Retrofit): RestApi {
+    fun providesApi(retrofit: Retrofit): RestApi {
         return retrofit.create(RestApi::class.java)
     }
 
