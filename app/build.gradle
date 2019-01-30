@@ -6,6 +6,11 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
+
+    dataBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "org.com.castcodechallenge.comcastcodechallenge"
         minSdkVersion 21
