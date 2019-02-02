@@ -6,7 +6,7 @@ import dagger.Reusable
 import org.com.castcodechallenge.comcastcodechallenge.api.RestApi
 import org.com.castcodechallenge.comcastcodechallenge.constants.GlobalConstants.Companion.baseUrl
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
 class NetworkModule {
@@ -21,7 +21,7 @@ class NetworkModule {
     @Reusable
     fun providesRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(baseUrl)
             .build()
     }

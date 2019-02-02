@@ -18,7 +18,7 @@ import retrofit2.Response
 import java.util.logging.Logger
 import javax.inject.Inject
 
-class CharactersListViewModel(private val charactersDao: CharactersDao): BaseViewModel(){
+class CharactersListViewModel(private val charactersDao: CharactersDao) : BaseViewModel() {
 
     private var TAG = CharactersListViewModel::class.java.simpleName
     @Inject
@@ -31,7 +31,7 @@ class CharactersListViewModel(private val charactersDao: CharactersDao): BaseVie
     var errorMessage: MutableLiveData<Int> = MutableLiveData()
     val errorClickListener = View.OnClickListener { fetchData() }
 
-    init{
+    init {
         logger = Logger.getLogger(TAG)
         fetchData()
     }
@@ -39,14 +39,16 @@ class CharactersListViewModel(private val charactersDao: CharactersDao): BaseVie
     private fun fetchData() = GlobalScope.launch {
         val deferredCharactersResult = async {
             restApi.getCharacters("simpsons characters", format).enqueue(object : Callback<CharactersResult> {
-                override fun onFailure(p0: Call<CharactersResult>, throwable: Throwable) {
-                    logger.severe("$TAG::fetchData::onFailure::${throwable.message}")
+                override fun onFailure(call: Call<CharactersResult>, t: Throwable) {
+                    logger.severe("$TAG::fetchData::onFailure::${t.message}")
                 }
 
                 override fun onResponse(call: Call<CharactersResult>, response: Response<CharactersResult>) {
-//                    logger.severe("$TAG::onResponse::${response.body()?.relatedTopics?.size}")
-                    logger.severe("$TAG::onResponse::${response.body()?.definitionSource}")
+                    logger.severe("$TAG::fetchData::onResponse::${response.body()?.relatedTopics?.size}")
+                    response.body()?.let { fetchResult ->
 
+
+                    }
                 }
 
             })
@@ -55,20 +57,24 @@ class CharactersListViewModel(private val charactersDao: CharactersDao): BaseVie
 
     }
 
-    private fun onRetrieveCharactersListStart(){
+    private fun saveFetchedData() = GlobalScope.launch {
+
+    }
+
+    private fun onRetrieveCharactersListStart() {
         loadingVisibility.value = View.VISIBLE
         errorMessage.value = null
     }
 
-    private fun onRetrieveCharactersListFinish(){
+    private fun onRetrieveCharactersListFinish() {
         loadingVisibility.value = View.GONE
     }
 
-    private fun onRetrieveCharactersListSuccess(charactersList: List<Character>){
+    private fun onRetrieveCharactersListSuccess(charactersList: List<Character>) {
         rvAdapter.updateCharacterList(charactersList)
     }
 
-    private fun onRetrieveCharactersError(){
+    private fun onRetrieveCharactersError() {
         errorMessage.value = R.string.error_message
     }
 
