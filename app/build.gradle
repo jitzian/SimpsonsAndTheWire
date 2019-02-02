@@ -64,6 +64,10 @@ dependencies {
     testImplementation "org.mockito:mockito-core:${deps.mockitoCoreVersionLib}"
     testImplementation "com.nhaarman:mockito-kotlin:${deps.nhaarmanMockitoVersionLib}"
 
+    // LiveData & ViewModel
+    implementation"android.arch.lifecycle:extensions:${deps.lifecycleVersionLib}"
+
+
 }
 
 //Dagger

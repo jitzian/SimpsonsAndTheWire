@@ -44,6 +44,7 @@ ext.deps = [
         'daggerVersionLib'              :   '2.19',
         'picassoVersionLib'             :   '2.71828',
         'mockitoCoreVersionLib'         :   '2.19.0',
-        'nhaarmanMockitoVersionLib'     :   '1.5.0'
+        'nhaarmanMockitoVersionLib'     :   '1.5.0',
+        'lifecycleVersionLib'           :   '1.1.1'
 
 ]
