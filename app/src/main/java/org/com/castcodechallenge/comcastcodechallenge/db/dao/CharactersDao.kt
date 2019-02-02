@@ -13,6 +13,7 @@ interface CharactersDao {
     val getAllCharacters: List<Character>
 
     @Insert(onConflict = REPLACE)
-    fun insert(vararg character: Character)
+//    fun insert(vararg character: Character)
+    fun insert(character: Character)
 
 }
