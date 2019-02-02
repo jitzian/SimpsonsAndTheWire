@@ -9,6 +9,7 @@ import org.com.castcodechallenge.comcastcodechallenge.R
 import org.com.castcodechallenge.comcastcodechallenge.api.RestApi
 import org.com.castcodechallenge.comcastcodechallenge.api.model.CharactersResult
 import org.com.castcodechallenge.comcastcodechallenge.constants.GlobalConstants.Companion.format
+import org.com.castcodechallenge.comcastcodechallenge.db.dao.CharactersDao
 import org.com.castcodechallenge.comcastcodechallenge.db.model.Character
 import org.com.castcodechallenge.comcastcodechallenge.ui.adapter.RVCharactersAdapter
 import retrofit2.Call
@@ -17,7 +18,7 @@ import retrofit2.Response
 import java.util.logging.Logger
 import javax.inject.Inject
 
-class CharactersListViewModel: BaseViewModel(){
+class CharactersListViewModel(private val charactersDao: CharactersDao): BaseViewModel(){
 
     private var TAG = CharactersListViewModel::class.java.simpleName
     @Inject
@@ -43,11 +44,14 @@ class CharactersListViewModel: BaseViewModel(){
                 }
 
                 override fun onResponse(call: Call<CharactersResult>, response: Response<CharactersResult>) {
+//                    logger.severe("$TAG::onResponse::${response.body()?.relatedTopics?.size}")
+                    logger.severe("$TAG::onResponse::${response.body()?.definitionSource}")
 
                 }
 
             })
         }
+        deferredCharactersResult.await()
 
     }
 
