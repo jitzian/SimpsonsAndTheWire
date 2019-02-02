@@ -1,10 +1,9 @@
 package org.com.castcodechallenge.comcastcodechallenge.ui
 
 import android.arch.lifecycle.MutableLiveData
+import android.content.Context
 import android.view.View
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.com.castcodechallenge.comcastcodechallenge.R
 import org.com.castcodechallenge.comcastcodechallenge.api.RestApi
 import org.com.castcodechallenge.comcastcodechallenge.api.model.CharactersResult
@@ -34,48 +33,76 @@ class CharactersListViewModel(private val charactersDao: CharactersDao) : BaseVi
     init {
         logger = Logger.getLogger(TAG)
         fetchData()
+        onRetrieveCharactersListStart()
     }
 
     private fun fetchData() = GlobalScope.launch {
-        val deferredCharactersResult = async {
-            restApi.getCharacters("simpsons characters", format).enqueue(object : Callback<CharactersResult> {
-                override fun onFailure(call: Call<CharactersResult>, t: Throwable) {
-                    logger.severe("$TAG::fetchData::onFailure::${t.message}")
-                }
 
-                override fun onResponse(call: Call<CharactersResult>, response: Response<CharactersResult>) {
-                    logger.severe("$TAG::fetchData::onResponse::${response.body()?.relatedTopics?.size}")
-                    response.body()?.let { fetchResult ->
+        withContext(Dispatchers.Main) {
 
 
+            val deferredCharactersResult = async {
+                restApi.getCharacters("simpsons characters", format).enqueue(object : Callback<CharactersResult> {
+                    override fun onFailure(call: Call<CharactersResult>, t: Throwable) {
+                        logger.severe("$TAG::fetchData::onFailure::${t.message}")
+                        onRetrieveCharactersError()
                     }
-                }
 
-            })
+                    override fun onResponse(call: Call<CharactersResult>, response: Response<CharactersResult>) {
+                        logger.severe("$TAG::fetchData::onResponse::${response.body()?.relatedTopics?.size}")
+
+                        response.body()?.let { fetchResult ->
+                            fetchResult.relatedTopics.let { lstRelatedTopics ->
+                                if (lstRelatedTopics != null) {
+                                    for (i in lstRelatedTopics) {
+                                        with(i) {
+                                            saveFetchedData(Character(icon?.url, text, result))
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+
+                })
+            }
+            deferredCharactersResult.await()
+
         }
-        deferredCharactersResult.await()
 
     }
 
-    private fun saveFetchedData() = GlobalScope.launch {
-
+    private fun saveFetchedData(objToSaveInDb: Character) = GlobalScope.launch {
+        async {
+            charactersDao.insert(objToSaveInDb)
+        }
+        withContext(Dispatchers.Main){
+            onRetrieveCharactersListFinish()
+        }
     }
 
-    private fun onRetrieveCharactersListStart() {
-        loadingVisibility.value = View.VISIBLE
-        errorMessage.value = null
+    private fun onRetrieveCharactersListStart() = GlobalScope.launch{
+        withContext(Dispatchers.Main){
+            loadingVisibility.value = View.VISIBLE
+            errorMessage.value = null
+        }
     }
 
-    private fun onRetrieveCharactersListFinish() {
-        loadingVisibility.value = View.GONE
+    private fun onRetrieveCharactersListFinish() = GlobalScope.launch{
+        withContext(Dispatchers.Main){
+            loadingVisibility.value = View.GONE
+        }
     }
 
     private fun onRetrieveCharactersListSuccess(charactersList: List<Character>) {
         rvAdapter.updateCharacterList(charactersList)
     }
 
-    private fun onRetrieveCharactersError() {
-        errorMessage.value = R.string.error_message
+    private fun onRetrieveCharactersError() = GlobalScope.launch{
+        withContext(Dispatchers.Main){
+            errorMessage.value = R.string.error_message
+        }
     }
 
 }
