@@ -1,36 +1,51 @@
 package org.com.castcodechallenge.comcastcodechallenge.api.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
 class SrcOptions {
 
-    @Json(name = "language")
-    var language: String? = null
-    @Json(name = "source_skip")
-    var sourceSkip: String? = null
-    @Json(name = "skip_icon")
-    var skipIcon: Int? = null
-    @Json(name = "min_abstract_length")
-    var minAbstractLength: String? = null
-    @Json(name = "skip_abstract_paren")
-    var skipAbstractParen: Int? = null
-    @Json(name = "skip_image_name")
-    var skipImageName: Int? = null
-    @Json(name = "src_info")
-    var srcInfo: String? = null
-    @Json(name = "is_wikipedia")
-    var isWikipedia: Int? = null
-    @Json(name = "directory")
-    var directory: String? = null
-    @Json(name = "skip_abstract")
-    var skipAbstract: Int? = null
-    @Json(name = "is_fanon")
-    var isFanon: Int? = null
-    @Json(name = "skip_qr")
+    @SerializedName("skip_qr")
+    @Expose
     var skipQr: String? = null
-    @Json(name = "skip_end")
+    @SerializedName("is_mediawiki")
+    @Expose
+    var isMediawiki: Int = 0
+    @SerializedName("directory")
+    @Expose
+    var directory: String? = null
+    @SerializedName("is_fanon")
+    @Expose
+    var isFanon: Int = 0
+    @SerializedName("skip_abstract_paren")
+    @Expose
+    var skipAbstractParen: Int = 0
+    @SerializedName("skip_icon")
+    @Expose
+    var skipIcon: Int = 0
+    @SerializedName("source_skip")
+    @Expose
+    var sourceSkip: String? = null
+    @SerializedName("skip_abstract")
+    @Expose
+    var skipAbstract: Int = 0
+    @SerializedName("skip_image_name")
+    @Expose
+    var skipImageName: Int = 0
+    @SerializedName("language")
+    @Expose
+    var language: String? = null
+    @SerializedName("is_wikipedia")
+    @Expose
+    var isWikipedia: Int = 0
+    @SerializedName("min_abstract_length")
+    @Expose
+    var minAbstractLength: String? = null
+    @SerializedName("skip_end")
+    @Expose
     var skipEnd: String? = null
-    @Json(name = "is_mediawiki")
-    var isMediawiki: Int? = null
+    @SerializedName("src_info")
+    @Expose
+    var srcInfo: String? = null
 
 }

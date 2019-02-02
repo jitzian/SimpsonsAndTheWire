@@ -1,50 +1,72 @@
 package org.com.castcodechallenge.comcastcodechallenge.api.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
 class CharactersResult {
 
-    @Json(name = "Results")
-    @JvmSuppressWildcards var results: List<Any>? = null
-    @Json(name = "Redirect")
-    var redirect: String? = null
-    @Json(name = "DefinitionSource")
-    var definitionSource: String? = null
-    @Json(name = "Abstract")
-    var abstract: String? = null
-    @Json(name = "RelatedTopics")
-    var relatedTopics: List<RelatedTopic>? = null
-    @Json(name = "ImageHeight")
-    var imageHeight: Int? = null
-    @Json(name = "meta")
-    var meta: Meta? = null
-    @Json(name = "AbstractText")
-    var abstractText: String? = null
-    @Json(name = "DefinitionURL")
+    @SerializedName("DefinitionURL")
+    @Expose
     var definitionURL: String? = null
-    @Json(name = "ImageIsLogo")
-    var imageIsLogo: Int? = null
-    @Json(name = "Entity")
-    var entity: String? = null
-    @Json(name = "ImageWidth")
-    var imageWidth: Int? = null
-    @Json(name = "Image")
-    var image: String? = null
-    @Json(name = "Answer")
-    var answer: String? = null
-    @Json(name = "Heading")
-    var heading: String? = null
-    @Json(name = "Definition")
-    var definition: String? = null
-    @Json(name = "AnswerType")
-    var answerType: String? = null
-    @Json(name = "AbstractSource")
-    var abstractSource: String? = null
-    @Json(name = "Type")
-    var type: String? = null
-    @Json(name = "AbstractURL")
+    @SerializedName("RelatedTopics")
+    @Expose
+    var relatedTopics: List<RelatedTopic>? = null
+    @SerializedName("AbstractURL")
+    @Expose
     var abstractURL: String? = null
-    @Json(name = "Infobox")
+    @SerializedName("ImageIsLogo")
+    @Expose
+    var imageIsLogo: Int = 0
+    @SerializedName("Entity")
+    @Expose
+    var entity: String? = null
+    @SerializedName("Results")
+    @Expose
+    var results: List<Any>? = null
+    @SerializedName("meta")
+    @Expose
+    var meta: Meta? = null
+    @SerializedName("AbstractSource")
+    @Expose
+    var abstractSource: String? = null
+    @SerializedName("DefinitionSource")
+    @Expose
+    var definitionSource: String? = null
+    @SerializedName("AbstractText")
+    @Expose
+    var abstractText: String? = null
+    @SerializedName("AnswerType")
+    @Expose
+    var answerType: String? = null
+    @SerializedName("Answer")
+    @Expose
+    var answer: String? = null
+    @SerializedName("ImageWidth")
+    @Expose
+    var imageWidth: Int = 0
+    @SerializedName("Infobox")
+    @Expose
     var infobox: String? = null
+    @SerializedName("Heading")
+    @Expose
+    var heading: String? = null
+    @SerializedName("Image")
+    @Expose
+    var image: String? = null
+    @SerializedName("Type")
+    @Expose
+    var type: String? = null
+    @SerializedName("Redirect")
+    @Expose
+    var redirect: String? = null
+    @SerializedName("ImageHeight")
+    @Expose
+    var imageHeight: Int = 0
+    @SerializedName("Abstract")
+    @Expose
+    var abstract: String? = null
+    @SerializedName("Definition")
+    @Expose
+    var definition: String? = null
 
 }

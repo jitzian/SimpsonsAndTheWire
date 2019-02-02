@@ -1,16 +1,21 @@
 package org.com.castcodechallenge.comcastcodechallenge.api.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
 class RelatedTopic {
 
-    @Json(name = "Result")
-    var result: String? = null
-    @Json(name = "Icon")
-    var icon: Icon? = null
-    @Json(name = "Text")
-    var text: String? = null
-    @Json(name = "FirstURL")
+    @SerializedName("FirstURL")
+    @Expose
     var firstURL: String? = null
+    @SerializedName("Icon")
+    @Expose
+    var icon: Icon? = null
+    @SerializedName("Result")
+    @Expose
+    var result: String? = null
+    @SerializedName("Text")
+    @Expose
+    var text: String? = null
 
 }

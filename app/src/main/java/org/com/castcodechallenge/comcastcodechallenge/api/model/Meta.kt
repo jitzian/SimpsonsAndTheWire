@@ -1,66 +1,96 @@
 package org.com.castcodechallenge.comcastcodechallenge.api.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
 class Meta {
 
-    @Json(name = "repo")
-    var repo: String? = null
-    @Json(name = "js_callback_name")
-    var jsCallbackName: String? = null
-    @Json(name = "developer")
-    var developer: List<Developer>? = null
-    @Json(name = "example_query")
-    var exampleQuery: String? = null
-    @Json(name = "id")
-    var id: String? = null
-    @Json(name = "blockgroup")
-    @JvmSuppressWildcards var blockgroup: Any? = null
-    @Json(name = "producer")
-    @JvmSuppressWildcards var producer: Any? = null
-    @Json(name = "created_date")
-    @JvmSuppressWildcards var createdDate: Any? = null
-    @Json(name = "attribution")
-    @JvmSuppressWildcards var attribution: Any? = null
-    @Json(name = "src_domain")
+    @SerializedName("live_date")
+    @Expose
+    var liveDate: Any? = null
+    @SerializedName("src_url")
+    @Expose
+    var srcUrl: Any? = null
+    @SerializedName("src_domain")
+    @Expose
     var srcDomain: String? = null
-    @Json(name = "production_state")
-    var productionState: String? = null
-    @Json(name = "name")
-    var name: String? = null
-    @Json(name = "perl_module")
-    var perlModule: String? = null
-    @Json(name = "src_id")
-    var srcId: Int? = null
-    @Json(name = "live_date")
-    @JvmSuppressWildcards var liveDate: Any? = null
-    @Json(name = "designer")
-    @JvmSuppressWildcards var designer: Any? = null
-    @Json(name = "maintainer")
+    @SerializedName("unsafe")
+    @Expose
+    var unsafe: Int = 0
+    @SerializedName("maintainer")
+    @Expose
     var maintainer: Maintainer? = null
-    @Json(name = "status")
-    var status: String? = null
-    @Json(name = "is_stackexchange")
-    @JvmSuppressWildcards var isStackexchange: Any? = null
-    @Json(name = "src_name")
-    var srcName: String? = null
-    @Json(name = "dev_milestone")
-    var devMilestone: String? = null
-    @Json(name = "tab")
-    var tab: String? = null
-    @Json(name = "description")
-    var description: String? = null
-    @Json(name = "topic")
-    var topic: List<String>? = null
-    @Json(name = "signal_from")
-    var signalFrom: String? = null
-    @Json(name = "src_url")
-    @JvmSuppressWildcards var srcUrl: Any? = null
-    @Json(name = "dev_date")
-    @JvmSuppressWildcards var devDate: Any? = null
-    @Json(name = "src_options")
+    @SerializedName("src_options")
+    @Expose
     var srcOptions: SrcOptions? = null
-    @Json(name = "unsafe")
-    var unsafe: Int? = null
+    @SerializedName("example_query")
+    @Expose
+    var exampleQuery: String? = null
+    @SerializedName("js_callback_name")
+    @Expose
+    var jsCallbackName: String? = null
+    @SerializedName("description")
+    @Expose
+    var description: String? = null
+    @SerializedName("developer")
+    @Expose
+    var developer: List<Developer>? = null
+    @SerializedName("dev_date")
+    @Expose
+    var devDate: Any? = null
+    @SerializedName("tab")
+    @Expose
+    var tab: String? = null
+    @SerializedName("blockgroup")
+    @Expose
+    var blockgroup: Any? = null
+    @SerializedName("src_id")
+    @Expose
+    var srcId: Int = 0
+    @SerializedName("producer")
+    @Expose
+    var producer: Any? = null
+    @SerializedName("is_stackexchange")
+    @Expose
+    var isStackexchange: Any? = null
+    @SerializedName("repo")
+    @Expose
+    var repo: String? = null
+    @SerializedName("created_date")
+    @Expose
+    var createdDate: Any? = null
+    @SerializedName("topic")
+    @Expose
+    var topic: List<String>? = null
+    @SerializedName("production_state")
+    @Expose
+    var productionState: String? = null
+    @SerializedName("status")
+    @Expose
+    var status: String? = null
+    @SerializedName("name")
+    @Expose
+    var name: String? = null
+    @SerializedName("id")
+    @Expose
+    var id: String? = null
+    @SerializedName("dev_milestone")
+    @Expose
+    var devMilestone: String? = null
+    @SerializedName("designer")
+    @Expose
+    var designer: Any? = null
+    @SerializedName("signal_from")
+    @Expose
+    var signalFrom: String? = null
+    @SerializedName("attribution")
+    @Expose
+    var attribution: Any? = null
+    @SerializedName("src_name")
+    @Expose
+    var srcName: String? = null
+    @SerializedName("perl_module")
+    @Expose
+    var perlModule: String? = null
 
 }

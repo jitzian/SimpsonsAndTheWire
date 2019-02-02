@@ -1,14 +1,18 @@
 package org.com.castcodechallenge.comcastcodechallenge.api.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
 class Icon {
 
-    @Json(name = "Width")
+    @SerializedName("Width")
+    @Expose
     var width: String? = null
-    @Json(name = "Height")
-    var height: String? = null
-    @Json(name = "URL")
+    @SerializedName("URL")
+    @Expose
     var url: String? = null
+    @SerializedName("Height")
+    @Expose
+    var height: String? = null
 
 }

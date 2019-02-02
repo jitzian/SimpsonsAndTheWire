@@ -1,10 +1,12 @@
 package org.com.castcodechallenge.comcastcodechallenge.api.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
 class Maintainer {
 
-    @Json(name = "github")
+    @SerializedName("github")
+    @Expose
     var github: String? = null
 
 }

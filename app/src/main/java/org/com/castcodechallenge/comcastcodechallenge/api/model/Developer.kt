@@ -1,14 +1,18 @@
 package org.com.castcodechallenge.comcastcodechallenge.api.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
 class Developer {
 
-    @Json(name = "type")
-    var type: String? = null
-    @Json(name = "name")
+    @SerializedName("name")
+    @Expose
     var name: String? = null
-    @Json(name = "url")
+    @SerializedName("type")
+    @Expose
+    var type: String? = null
+    @SerializedName("url")
+    @Expose
     var url: String? = null
 
 }
