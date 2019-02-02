@@ -40,8 +40,18 @@ dependencies {
 
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:${deps.retrofitVersionLib}"
-//    implementation "com.squareup.retrofit2:converter-gson:${deps.gsonVersionLib}"
-    implementation "com.squareup.retrofit2:converter-moshi:2.4.0"
+    implementation "com.squareup.retrofit2:converter-gson:${deps.gsonVersionLib}"
+//    implementation "com.squareup.retrofit2:converter-moshi:2.4.0"
+//    implementation 'com.squareup.okio:okio:1.14.0'
+//    implementation 'com.squareup.moshi:moshi:1.6.0'
+//    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+
+//    implementation 'com.squareup.okio:okio:1.13.0'
+//    implementation 'com.squareup.moshi:moshi:1.5.0'
+//    implementation 'com.squareup.okhttp3:okhttp:3.8.0'
+//    implementation 'com.squareup.picasso:picasso:2.5.2'
+//    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+//    implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'
 
     //Google Maps
     implementation "com.google.android.gms:play-services-maps:${deps.googleMapsVersionLib}"

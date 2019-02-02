@@ -29,17 +29,10 @@ import java.util.logging.Logger
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
-    private var TAG = MainActivity::class.java.simpleName
-    private lateinit var restApi: RestApi
-    private lateinit var log: Logger
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: CharactersListViewModel
     private var errorSnackbar: Snackbar? = null
-
-
-    @Inject
-    lateinit var retrofit: Retrofit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,35 +50,6 @@ class MainActivity : AppCompatActivity() {
                 errorMessage -> if(errorMessage != null) showError(errorMessage) else hideError()
         })
         binding.viewModel = viewModel
-    }
-
-    private fun setupInjection(){
-        DaggerViewModelInjector.builder()
-            .build()
-            .inject(this)
-        restApi = retrofit.create(RestApi::class.java)
-
-
-
-    }
-
-    //TODO: Cleanup this
-    private fun fetchDataFromApi() = GlobalScope.launch {
-        val deferredCharacters = async {
-            restApi.getCharacters("simpsons characters", format).enqueue(object : Callback<CharactersResult> {
-                override fun onFailure(call: Call<CharactersResult>, t: Throwable) {
-                    log.severe("$TAG::onFailure::${t.message}")
-                }
-
-                override fun onResponse(call: Call<CharactersResult>, response: Response<CharactersResult>) {
-                    log.severe("$TAG::onResponse::${response.body()?.results}")
-                }
-            }
-            )
-
-//        deferredCharacters.await()
-//        log.severe("${deferredCharacters.await().body()?.relatedTopics?.size}")
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

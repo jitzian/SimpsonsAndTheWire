@@ -11,7 +11,6 @@ import javax.inject.Singleton
 @Component(modules = [NetworkModule::class])
 interface ViewModelInjector {
 
-    fun inject(mainActivity: MainActivity)
     fun inject(charactersViewModel: CharactersViewModel)
     fun inject(charactersListViewModel: CharactersListViewModel)
 
