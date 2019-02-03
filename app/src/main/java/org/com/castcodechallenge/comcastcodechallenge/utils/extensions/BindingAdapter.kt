@@ -14,12 +14,10 @@ fun setAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<*>) {
 }
 
 @BindingAdapter("mutableVisibility")
-fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>?) {
+fun setMutableVisibility(view: View, visibility: Int?) {
     val parentActivity: AppCompatActivity? = view.getParentActivity()
     if (parentActivity != null && visibility != null) {
-        visibility.observe(parentActivity, Observer { value ->
-            view.visibility = value ?: View.VISIBLE
-        })
+        view.visibility = visibility
     }
 }
 
