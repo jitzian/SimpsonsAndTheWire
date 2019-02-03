@@ -1,7 +1,6 @@
 package org.com.castcodechallenge.comcastcodechallenge.ui
 
 import android.arch.lifecycle.MutableLiveData
-import android.content.Context
 import android.view.View
 import kotlinx.coroutines.*
 import org.com.castcodechallenge.comcastcodechallenge.R
@@ -32,14 +31,21 @@ class CharactersListViewModel(private val charactersDao: CharactersDao) : BaseVi
 
     init {
         logger = Logger.getLogger(TAG)
+//        fetchData()
+//        onRetrieveCharactersListStart()
+        runBlocking {
+            prepareData()
+        }
+    }
+
+    private suspend fun prepareData() = GlobalScope.launch {
         fetchData()
-        onRetrieveCharactersListStart()
+        onRetrieveCharactersListSuccess(retrieveDataFromDB())
     }
 
     private fun fetchData() = GlobalScope.launch {
 
         withContext(Dispatchers.Main) {
-
 
             val deferredCharactersResult = async {
                 restApi.getCharacters("simpsons characters", format).enqueue(object : Callback<CharactersResult> {
@@ -56,7 +62,7 @@ class CharactersListViewModel(private val charactersDao: CharactersDao) : BaseVi
                                 if (lstRelatedTopics != null) {
                                     for (i in lstRelatedTopics) {
                                         with(i) {
-                                            saveFetchedData(Character(icon?.url, text, result))
+                                            insertFetchedDataIntoDb(Character(icon?.url, text, result))
                                         }
                                     }
                                 }
@@ -73,34 +79,40 @@ class CharactersListViewModel(private val charactersDao: CharactersDao) : BaseVi
 
     }
 
-    private fun saveFetchedData(objToSaveInDb: Character) = GlobalScope.launch {
-        async {
+    private fun insertFetchedDataIntoDb(objToSaveInDb: Character) = GlobalScope.launch {
+        withContext(Dispatchers.Default) {
             charactersDao.insert(objToSaveInDb)
         }
-        withContext(Dispatchers.Main){
+        withContext(Dispatchers.Main) {
             onRetrieveCharactersListFinish()
         }
     }
 
-    private fun onRetrieveCharactersListStart() = GlobalScope.launch{
-        withContext(Dispatchers.Main){
-            loadingVisibility.value = View.VISIBLE
-            errorMessage.value = null
+    private suspend fun retrieveDataFromDB(): List<Character> = coroutineScope {
+        val deferredListOfData = async {
+            charactersDao.getAllCharacters
+        }
+        return@coroutineScope deferredListOfData.await()
+    }
+
+    private fun onRetrieveCharactersListStart() {
+        loadingVisibility.postValue(View.VISIBLE)
+        errorMessage.postValue(null)
+    }
+
+    private fun onRetrieveCharactersListFinish() {
+        loadingVisibility.postValue(View.GONE)
+    }
+
+    private fun onRetrieveCharactersListSuccess(charactersList: List<Character>) = GlobalScope.launch {
+        logger.severe("$TAG::onRetrieveCharactersListSuccess::${charactersList.size}")
+        withContext(Dispatchers.Main) {
+            rvAdapter.updateCharacterList(charactersList)
         }
     }
 
-    private fun onRetrieveCharactersListFinish() = GlobalScope.launch{
-        withContext(Dispatchers.Main){
-            loadingVisibility.value = View.GONE
-        }
-    }
-
-    private fun onRetrieveCharactersListSuccess(charactersList: List<Character>) {
-        rvAdapter.updateCharacterList(charactersList)
-    }
-
-    private fun onRetrieveCharactersError() = GlobalScope.launch{
-        withContext(Dispatchers.Main){
+    private fun onRetrieveCharactersError() = GlobalScope.launch {
+        withContext(Dispatchers.Main) {
             errorMessage.value = R.string.error_message
         }
     }
