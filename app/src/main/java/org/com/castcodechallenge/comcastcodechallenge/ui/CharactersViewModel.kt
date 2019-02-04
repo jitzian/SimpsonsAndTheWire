@@ -12,7 +12,7 @@ class CharactersViewModel: BaseViewModel(){
     fun bind(character: Character){
         resultText.value = character.result
         text.value = character.text
-        imageUrl.value = character.text
+        imageUrl.value = character.url
     }
 
     fun getResultText(): MutableLiveData<String>{
