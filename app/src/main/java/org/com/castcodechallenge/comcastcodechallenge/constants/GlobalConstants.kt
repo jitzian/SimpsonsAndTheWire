@@ -12,6 +12,6 @@ class GlobalConstants {
         const val dataBaseVersion = 1
 
         //Null or Empty url
-        const val fallbackURL = "https://www.emyspot.com/medias/images/page404.png"
+        const val fallbackURL = "https://techpinite.com/themes/default/images/web/notfoundimg.png"
     }
 }
