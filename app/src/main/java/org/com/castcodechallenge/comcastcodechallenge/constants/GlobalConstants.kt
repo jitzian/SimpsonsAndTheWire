@@ -10,5 +10,8 @@ class GlobalConstants {
         //Constants for saving RoomDB
         const val dataBaseName = "comcast.db"
         const val dataBaseVersion = 1
+
+        //Null or Empty url
+        const val fallbackURL = "https://www.emyspot.com/medias/images/page404.png"
     }
 }

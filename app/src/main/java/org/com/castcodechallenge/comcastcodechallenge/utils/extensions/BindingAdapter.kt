@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
+import org.com.castcodechallenge.comcastcodechallenge.constants.GlobalConstants.Companion.fallbackURL
 
 @BindingAdapter("adapter")
 fun setAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<*>) {
@@ -36,6 +37,6 @@ fun setMutableText(view: TextView, text: MutableLiveData<String>?) {
 @BindingAdapter("bind:img_URL")
 fun setImageFromUrl(v: ImageView, url: String) {
     Picasso.get()
-        .load(url)
+        .load(if (url.isEmpty()) fallbackURL else url)
         .into(v)
 }

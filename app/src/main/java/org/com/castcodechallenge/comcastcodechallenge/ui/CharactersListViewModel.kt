@@ -60,28 +60,16 @@ class CharactersListViewModel(private val charactersDao: CharactersDao) : BaseVi
                                 if (lstRelatedTopics != null) {
                                     for (i in lstRelatedTopics) {
                                         with(i) {
-                                            insertFetchedDataIntoDb(
-                                                Character(
-                                                    icon?.url.let {
-                                                        //Adding not empty URL in case API does not provide data
-                                                        if (it != "") it else "https://duckduckgo.com/i/39ce98c0.png"
-                                                    },
-                                                    text,
-                                                    result
-                                                )
-                                            )
+                                            insertFetchedDataIntoDb(Character(icon?.url, text, result))
                                         }
                                     }
                                 }
-
                             }
                         }
                     }
-
                 })
             }
             deferredCharactersResult.await()
-
         }
 
     }
