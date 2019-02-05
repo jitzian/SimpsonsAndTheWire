@@ -27,25 +27,34 @@ class CharactersListViewModel(private val charactersDao: CharactersDao) : BaseVi
     //MutableData
     var loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     var errorMessage: MutableLiveData<Int> = MutableLiveData()
-    val errorClickListener = View.OnClickListener { fetchData() }
+    val errorClickListener = View.OnClickListener {
+        runBlocking { fetchRemoteData() }
+    }
 
     init {
         logger = Logger.getLogger(TAG)
-        runBlocking {
-            prepareData()
+        prepareData()
+    }
+
+    private fun prepareData() = GlobalScope.launch {
+        val lstDb = retrieveDataFromDB()
+        if(!lstDb.isEmpty()){
+            logger.severe("NOT EMPTY")
+            onRetrieveCharactersListSuccess(lstDb)
+        }else{
+            logger.severe("EMPTY")
+            runBlocking {
+                fetchRemoteData()
+                delay(1000)
+                onRetrieveCharactersListSuccess(retrieveDataFromDB())
+            }
         }
     }
 
-    private suspend fun prepareData() = GlobalScope.launch {
-        fetchData()
-        onRetrieveCharactersListSuccess(retrieveDataFromDB())
-    }
-
-    private fun fetchData() = GlobalScope.launch {
-
-        withContext(Dispatchers.Main) {
-
-            val deferredCharactersResult = async {
+    private fun fetchRemoteData() {
+        runBlocking {
+            withContext(Dispatchers.IO) {
+                onRetrieveCharactersListStart()
                 restApi.getCharacters("simpsons characters", format).enqueue(object : Callback<CharactersResult> {
                     override fun onFailure(call: Call<CharactersResult>, t: Throwable) {
                         logger.severe("$TAG::fetchData::onFailure::${t.message}")
@@ -54,33 +63,26 @@ class CharactersListViewModel(private val charactersDao: CharactersDao) : BaseVi
 
                     override fun onResponse(call: Call<CharactersResult>, response: Response<CharactersResult>) {
                         logger.severe("$TAG::fetchData::onResponse::${response.body()?.relatedTopics?.size}")
-
-                        response.body()?.let { fetchResult ->
-                            fetchResult.relatedTopics.let { lstRelatedTopics ->
-                                if (lstRelatedTopics != null) {
-                                    for (i in lstRelatedTopics) {
-                                        with(i) {
-                                            insertFetchedDataIntoDb(Character(icon?.url, text, result))
-                                        }
-                                    }
+                        response.body()?.relatedTopics?.let { lstRelatedTopics ->
+                            for (i in lstRelatedTopics) {
+                                with(i) {
+                                    insertFetchedDataIntoDb(Character(icon?.url, text, result))
                                 }
                             }
                         }
                     }
                 })
             }
-            deferredCharactersResult.await()
         }
-
     }
 
-    private fun insertFetchedDataIntoDb(objToSaveInDb: Character) = GlobalScope.launch {
-        withContext(Dispatchers.Default) {
-            charactersDao.insert(objToSaveInDb)
+    private fun insertFetchedDataIntoDb(objToSaveInDb: Character) {
+        runBlocking {
+            withContext(Dispatchers.IO) {
+                charactersDao.insert(objToSaveInDb)
+            }
         }
-        withContext(Dispatchers.Main) {
-            onRetrieveCharactersListFinish()
-        }
+        onRetrieveCharactersListFinish()
     }
 
     private suspend fun retrieveDataFromDB(): List<Character> = coroutineScope {
@@ -103,6 +105,7 @@ class CharactersListViewModel(private val charactersDao: CharactersDao) : BaseVi
         logger.severe("$TAG::onRetrieveCharactersListSuccess::${charactersList.size}")
         withContext(Dispatchers.Main) {
             rvAdapter.updateCharacterList(charactersList)
+            onRetrieveCharactersListFinish()
         }
     }
 
