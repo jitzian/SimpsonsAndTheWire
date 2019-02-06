@@ -39,4 +39,5 @@ class RVCharactersAdapter: RecyclerView.Adapter<RVCharactersAdapter.ViewHolder>(
         }
     }
 
+
 }

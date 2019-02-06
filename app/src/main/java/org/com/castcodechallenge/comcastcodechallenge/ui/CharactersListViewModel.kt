@@ -7,6 +7,9 @@ import org.com.castcodechallenge.comcastcodechallenge.R
 import org.com.castcodechallenge.comcastcodechallenge.api.RestApi
 import org.com.castcodechallenge.comcastcodechallenge.api.model.CharactersResult
 import org.com.castcodechallenge.comcastcodechallenge.constants.GlobalConstants.Companion.format
+import org.com.castcodechallenge.comcastcodechallenge.constants.GlobalConstants.Companion.noTitleFallback
+import org.com.castcodechallenge.comcastcodechallenge.constants.simpsonsQuery
+import org.com.castcodechallenge.comcastcodechallenge.constants.theWireQuery
 import org.com.castcodechallenge.comcastcodechallenge.db.dao.CharactersDao
 import org.com.castcodechallenge.comcastcodechallenge.db.model.Character
 import org.com.castcodechallenge.comcastcodechallenge.ui.adapter.RVCharactersAdapter
@@ -38,10 +41,10 @@ class CharactersListViewModel(private val charactersDao: CharactersDao) : BaseVi
 
     private fun prepareData() = GlobalScope.launch {
         val lstDb = retrieveDataFromDB()
-        if(!lstDb.isEmpty()){
+        if (!lstDb.isEmpty()) {
             logger.severe("NOT EMPTY")
             onRetrieveCharactersListSuccess(lstDb)
-        }else{
+        } else {
             logger.severe("EMPTY")
             runBlocking {
                 fetchRemoteData()
@@ -55,7 +58,7 @@ class CharactersListViewModel(private val charactersDao: CharactersDao) : BaseVi
         runBlocking {
             withContext(Dispatchers.IO) {
                 onRetrieveCharactersListStart()
-                restApi.getCharacters("simpsons characters", format).enqueue(object : Callback<CharactersResult> {
+                restApi.getCharacters(simpsonsQuery, format).enqueue(object : Callback<CharactersResult> {
                     override fun onFailure(call: Call<CharactersResult>, t: Throwable) {
                         logger.severe("$TAG::fetchData::onFailure::${t.message}")
                         onRetrieveCharactersError()
@@ -66,7 +69,14 @@ class CharactersListViewModel(private val charactersDao: CharactersDao) : BaseVi
                         response.body()?.relatedTopics?.let { lstRelatedTopics ->
                             for (i in lstRelatedTopics) {
                                 with(i) {
-                                    insertFetchedDataIntoDb(Character(icon?.url, text, result))
+                                    insertFetchedDataIntoDb(
+                                        Character(
+                                            if (!response.body()?.heading.isNullOrEmpty()) response.body()?.heading else noTitleFallback,
+                                            icon?.url,
+                                            text,
+                                            result
+                                        )
+                                    )
                                 }
                             }
                         }

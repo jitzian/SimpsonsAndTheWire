@@ -13,5 +13,6 @@ class GlobalConstants {
 
         //Null or Empty url
         const val fallbackURL = "https://techpinite.com/themes/default/images/web/notfoundimg.png"
+        const val noTitleFallback = "No title"
     }
 }
