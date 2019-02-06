@@ -1,14 +1,18 @@
-# DYNAMIT: MOBILE DEVELOPER CODE PROMPT
+# Mobile App
 
-Write a native app (iOS or Android) that consumes data from from the open air quality API
-( https://docs.openaq.org/ ) and displays it to the screen.
-Display a listing of the city names and number of measurements that are available for that city. Do
-not show any cities that have less than 10,000 measurements. The listing should be sorted
-descending by number of measurements. The app should use the most efficient way possible to
-filter and sort the data.
-Along with a display for the list, a user should be able to tap one of the locations and open a
-detail view that includes additional information about the location/measurement.
-Additionally, the app should be able to handle connectivity issues gracefully
+App Requirements
+Write a sample app that fetches and displays data from a RESTful Web API.
+The app should be able to display the data as a text only, scrollable list of titles, and on phones, should be toggle-able from the list to a
+scrollable grid of item images.
+The title and description for each item should each be parsed out of the data in the "Text" field. Images should be loaded from the URLs
+in the "Icon" field. For items with blank or missing image URLs, use a placeholder image of your choice.
+Clicking on an item should load a Detail view, including the item’s image, title, and description. You choose the layout of the Detail view.
+On tablets, the app should show the list and detail views on the same screen. For phones, the list and detail should each be full screen.
+The app should have an tool-bar that displays:
+For Phone
+The name of the app on the item list screen, and the title of the item on the detail screen
+For Tablets
+The name of the app
 
 ## Getting Started
 
