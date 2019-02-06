@@ -2,6 +2,7 @@ package org.com.castcodechallenge.comcastcodechallenge.ui
 
 import android.arch.lifecycle.MutableLiveData
 import org.com.castcodechallenge.comcastcodechallenge.db.model.Character
+import org.com.castcodechallenge.comcastcodechallenge.ui.adapter.listeners.ButtonClickListenerEvent
 
 class CharactersViewModel: BaseViewModel(){
 
@@ -9,9 +10,8 @@ class CharactersViewModel: BaseViewModel(){
     private val resultText = MutableLiveData<String>()
     private val text = MutableLiveData<String>()
     private val imageUrl = MutableLiveData<String>()
-
-    //This variable is just for checking if info is displayed or not
-    private val isExanded: Boolean = false
+    private val isExpanded = MutableLiveData<Boolean>()
+    private val buttonClickListenerEvent = ButtonClickListenerEvent()
 
     fun bind(character: Character){
         headerText.value = character.header
@@ -35,5 +35,14 @@ class CharactersViewModel: BaseViewModel(){
     fun getHeaderText(): MutableLiveData<String>{
         return headerText
     }
+
+    fun getIsExpanded(): MutableLiveData<Boolean>{
+        return isExpanded
+    }
+
+    fun getButtonClickListenerEvent(): ButtonClickListenerEvent{
+        return buttonClickListenerEvent
+    }
+
 
 }
