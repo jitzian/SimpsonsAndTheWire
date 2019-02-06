@@ -9,7 +9,6 @@ import org.com.castcodechallenge.comcastcodechallenge.api.model.CharactersResult
 import org.com.castcodechallenge.comcastcodechallenge.constants.GlobalConstants.Companion.format
 import org.com.castcodechallenge.comcastcodechallenge.constants.GlobalConstants.Companion.noTitleFallback
 import org.com.castcodechallenge.comcastcodechallenge.constants.simpsonsQuery
-import org.com.castcodechallenge.comcastcodechallenge.constants.theWireQuery
 import org.com.castcodechallenge.comcastcodechallenge.db.dao.CharactersDao
 import org.com.castcodechallenge.comcastcodechallenge.db.model.Character
 import org.com.castcodechallenge.comcastcodechallenge.ui.adapter.RVCharactersAdapter
@@ -31,7 +30,7 @@ class CharactersListViewModel(private val charactersDao: CharactersDao) : BaseVi
     var loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     var errorMessage: MutableLiveData<Int> = MutableLiveData()
     val errorClickListener = View.OnClickListener {
-        runBlocking { fetchRemoteData() }
+        runBlocking { prepareData() }
     }
 
     init {
@@ -41,14 +40,13 @@ class CharactersListViewModel(private val charactersDao: CharactersDao) : BaseVi
 
     private fun prepareData() = GlobalScope.launch {
         val lstDb = retrieveDataFromDB()
+
         if (!lstDb.isEmpty()) {
-            logger.severe("NOT EMPTY")
             onRetrieveCharactersListSuccess(lstDb)
         } else {
-            logger.severe("EMPTY")
             runBlocking {
                 fetchRemoteData()
-                delay(1000)
+                delay(2000)
                 onRetrieveCharactersListSuccess(retrieveDataFromDB())
             }
         }
