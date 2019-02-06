@@ -108,7 +108,6 @@ class CharactersListViewModel(private val charactersDao: CharactersDao) : BaseVi
     }
 
     private fun onRetrieveCharactersListSuccess(charactersList: List<Character>) = GlobalScope.launch {
-        logger.severe("$TAG::onRetrieveCharactersListSuccess::${charactersList.size}")
         withContext(Dispatchers.Main) {
             rvAdapter.updateCharacterList(charactersList)
             onRetrieveCharactersListFinish()

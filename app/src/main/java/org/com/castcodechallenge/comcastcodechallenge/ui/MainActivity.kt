@@ -21,9 +21,10 @@ class MainActivity : AppCompatActivity() {
     private var errorSnackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        initBinding()
+        super.onCreate(savedInstanceState).also {
+            setContentView(R.layout.activity_main)
+            initBinding()
+        }
     }
 
     private fun initBinding(){
@@ -34,8 +35,9 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.errorMessage.observe(this, Observer {
                 errorMessage -> if(errorMessage != null) showError(errorMessage) else hideError()
-        })
-        binding.viewModel = viewModel
+        }).also {
+            binding.viewModel = viewModel
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
