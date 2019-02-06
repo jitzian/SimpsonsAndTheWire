@@ -20,8 +20,27 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // Specifies one flavor dimension.
+    flavorDimensions "app"
+    productFlavors {
+        simpsons {
+            // Assigns this product flavor to the "version" flavor dimension.
+            // This property is optional if you are using only one dimension.
+            dimension "app"
+            applicationId project.SIMPSONS_PACKAGE_NAME
+            applicationIdSuffix ".simpsons"
+            versionNameSuffix "-simpsons"
+        }
+        theWire {
+            dimension "app"
+            applicationId project.THE_WIRE_PACKAGE_NAME
+            applicationIdSuffix ".theWire"
+            versionNameSuffix "-theWire"
         }
     }
 }
