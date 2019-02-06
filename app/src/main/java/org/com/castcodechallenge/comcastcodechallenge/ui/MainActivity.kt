@@ -6,27 +6,13 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
-
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import org.com.castcodechallenge.comcastcodechallenge.R
-import org.com.castcodechallenge.comcastcodechallenge.api.RestApi
-import org.com.castcodechallenge.comcastcodechallenge.api.model.CharactersResult
-import org.com.castcodechallenge.comcastcodechallenge.constants.GlobalConstants.Companion.format
 import org.com.castcodechallenge.comcastcodechallenge.databinding.ActivityMainBinding
-import org.com.castcodechallenge.comcastcodechallenge.dependency.injection.components.DaggerViewModelInjector
 import org.com.castcodechallenge.comcastcodechallenge.utils.ViewModelFactory
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import java.util.logging.Logger
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
