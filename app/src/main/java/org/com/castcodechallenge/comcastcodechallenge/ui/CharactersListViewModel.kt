@@ -29,9 +29,7 @@ class CharactersListViewModel(private val charactersDao: CharactersDao) : BaseVi
     //MutableData
     var loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     var errorMessage: MutableLiveData<Int> = MutableLiveData()
-    val errorClickListener = View.OnClickListener {
-        runBlocking { prepareData() }
-    }
+    val errorClickListener = View.OnClickListener { prepareData() }
 
     init {
         logger = Logger.getLogger(TAG)
